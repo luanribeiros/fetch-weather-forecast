@@ -5,55 +5,77 @@ import down from '../../assets/images/icons/download.png';
 import rain from '../../assets/images/icons/protection-symbol-of-opened-umbrella-silhouette-under-raindrops.png';
 import temp from '../../assets/images/icons/raindrop-close-up.png';
 
-const Card = () => {
+import Search from '../Search';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { searchWeather } from '../../store/actions';
+
+const Card = (props) => {
   return (
     <>
-      <h1>Previsão para Osasco - SP</h1>
-      <section className="bgCard">
-        <section className="bgCard-header">
-          <h2>01/02/2017</h2>
-          <p>
-            Sol com muitas nuvens durante o dia. Período de nublado, com muita chuva a qualquer
-            hora.
-          </p>
-        </section>
-        <section className="bgCard-content">
-          <section className="bgCard-content_temp">
-            <table>
-              <tr>
-                <td>
-                  <img src={up} title="" alt="" />
-                </td>
-                <td className="colorTemp">20°C</td>
-              </tr>
-              <tr>
-                <td>
-                  <img src={temp} title="" alt="" />
-                </td>
-                <td>10mm</td>
-              </tr>
-            </table>
+      <Search onSearch={(v) => props.searchWeather(v)} />
+      {props.search.map((elem) => (
+        <h1>Previsão para {elem.locale.name}</h1>
+      ))}
+      {props.search.map((item) =>
+        item.weather.map((elem) => (
+          <section className="bgCard">
+            <section className="bgCard-header">
+              <h2>{elem.date}</h2>
+              <p>{elem.text}</p>
+            </section>
+            <section className="bgCard-content">
+              <section className="bgCard-content_temp">
+                <table>
+                  <tr>
+                    <td>
+                      <img src={up} title="" alt="" />
+                    </td>
+                    <td className="colorTemp">{elem.temperature.max}°C</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src={temp} title="" alt="" />
+                    </td>
+                    <td>{elem.rain.probability}mm</td>
+                  </tr>
+                </table>
+              </section>
+              <section className="bgCard-content_rain">
+                <table>
+                  <tr>
+                    <td>
+                      <img src={down} title="" alt="" />
+                    </td>
+                    <td className="colorRain">{elem.temperature.min}°C</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src={rain} title="" alt="" />
+                    </td>
+                    <td>{elem.rain.precipitation}%</td>
+                  </tr>
+                </table>
+              </section>
+            </section>
           </section>
-          <section className="bgCard-content_rain">
-            <table>
-              <tr>
-                <td>
-                  <img src={down} title="" alt="" />
-                </td>
-                <td className="colorRain">10°C</td>
-              </tr>
-              <tr>
-                <td>
-                  <img src={rain} title="" alt="" />
-                </td>
-                <td>50%</td>
-              </tr>
-            </table>
-          </section>
-        </section>
-      </section>
+        )),
+      )}
     </>
   );
 };
 
-export default Card;
+const mapStateToProps = (state) => ({
+  app: state.app,
+  search: state.weather.search,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      searchWeather,
+    },
+    dispatch,
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

@@ -10,13 +10,6 @@ const Layout = ({ children }) => {
           <img src={logo} title="" alt="" />
         </section>
       </section>
-      <section className="bgSearch">
-        <section className="bgSearch-input">
-          <form onSubmit={(e) => e.preventDefault()}>
-            <input type="search" id="search" name="search" placeholder="Type your fetch..." />
-          </form>
-        </section>
-      </section>
       <section className="bgContent">{children}</section>
     </>
   );
