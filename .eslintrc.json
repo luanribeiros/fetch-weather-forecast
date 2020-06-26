@@ -49,6 +49,8 @@
     "import/order": 0,
     "default-case": 0,
     "no-unused-expressions": 0,
+    "jsx-a11y/no-autofocus": 0,
+    "spaced-comment": 0,
     "react/destructuring-assignment": 0,
     "react/jsx-wrap-multilines": "off",
     "react/no-array-index-key": "off",

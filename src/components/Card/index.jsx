@@ -15,11 +15,11 @@ const Card = (props) => {
     <>
       <Search onSearch={(v) => props.searchWeather(v)} />
       {props.search.map((elem) => (
-        <h1>Previsão para {elem.locale.name}</h1>
+        <h1>Previsão para {`${elem.locale.name} - ${elem.locale.state}`}</h1>
       ))}
       {props.search.map((item) =>
         item.weather.map((elem) => (
-          <section className="bgCard">
+          <section className="bgCard" key={elem.date}>
             <section className="bgCard-header">
               <h2>{elem.date}</h2>
               <p>{elem.text}</p>

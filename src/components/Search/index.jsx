@@ -9,6 +9,8 @@ const Search = ({ onSearch }) => {
           <input
             type="search"
             id="search"
+            data-cy="input-search"
+            autoFocus
             name="search"
             placeholder="Type your fetch..."
             onChange={(e) => onSearch(e.target.value)}
